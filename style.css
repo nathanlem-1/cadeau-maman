@@ -1,0 +1,203 @@
+/* ================================================================
+   GOOGLE FONTS
+================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
+
+/* ================================================================
+   VARIABLES
+================================================================ */
+:root {
+    --c-black:    #0A0A0A;
+    --c-white:    #FFFFFF;
+    --c-red:      #C41E3A;
+    --c-red-dark: #9E1830;
+    --c-gold:     #B8860B;
+    --c-surface:  #111111;
+    --c-border:   rgba(255, 255, 255, .07);
+
+    --f-title: 'Cormorant Garamond', Georgia, serif;
+    --f-body:  'Jost', system-ui, sans-serif;
+
+    --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ================================================================
+   RESET
+================================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--c-black);
+    color: var(--c-white);
+    font-family: var(--f-body);
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    animation: pageIn .5s var(--ease-out) forwards;
+}
+
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* ================================================================
+   TRANSITIONS DE PAGE
+================================================================ */
+body.exit {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+/* ================================================================
+   KEYFRAMES
+================================================================ */
+@keyframes pageIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: none; }
+}
+
+@keyframes aFadeScale {
+    from { opacity: 0; transform: scale(.93); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes aFadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
+}
+
+/* ================================================================
+   COMPOSANTS PARTAGÉS
+================================================================ */
+
+/* Eyebrow */
+.eyebrow {
+    display: block;
+    font-size: .58rem;
+    font-weight: 500;
+    letter-spacing: .48em;
+    text-transform: uppercase;
+    color: var(--c-red);
+    margin-bottom: .75rem;
+}
+
+/* Ornement losange */
+.ornament {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.ornament::before,
+.ornament::after {
+    content: '';
+    display: block;
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, .12);
+}
+
+.ornament-diamond {
+    width: 5px;
+    height: 5px;
+    background: var(--c-red);
+    transform: rotate(45deg);
+    flex-shrink: 0;
+}
+
+/* Bouton principal (rouge) */
+.btn-primary {
+    display: inline-block;
+    font-family: var(--f-body);
+    font-size: .65rem;
+    font-weight: 500;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--c-white);
+    background: var(--c-red);
+    border: none;
+    padding: 1rem 2.5rem;
+    cursor: pointer;
+    transition: background .2s;
+}
+
+.btn-primary:hover { background: var(--c-red-dark); }
+
+.btn-primary:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+/* Bouton outline */
+.btn-outline {
+    display: inline-block;
+    font-family: var(--f-body);
+    font-size: .65rem;
+    font-weight: 500;
+    letter-spacing: .35em;
+    text-transform: uppercase;
+    color: var(--c-white);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .2);
+    padding: 1rem 2.5rem;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    text-decoration: none;
+}
+
+.btn-outline:hover { border-color: var(--c-white); background: rgba(255, 255, 255, .04); }
+
+/* Barre de navigation retour (pages détail + confirmation) */
+.back-nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding: 1.1rem 1.5rem;
+    background: rgba(10, 10, 10, .95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, .05);
+    font-size: .58rem;
+    font-weight: 500;
+    letter-spacing: .3em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .4);
+    cursor: pointer;
+    transition: color .2s;
+    text-decoration: none;
+}
+
+.back-nav:hover { color: var(--c-white); }
+
+.back-nav-arrow {
+    color: var(--c-red);
+    font-size: .85rem;
+    line-height: 1;
+    transition: transform .22s var(--ease-out);
+}
+
+.back-nav:hover .back-nav-arrow { transform: translateX(-3px); }
+
+/* Bouton son */
+#sound-btn {
+    position: fixed;
+    top: 1.1rem;
+    right: 1.25rem;
+    z-index: 200;
+    font-size: .55rem;
+    font-weight: 500;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, .35);
+    border: 1px solid rgba(255, 255, 255, .1);
+    padding: .38rem .85rem;
+    transition: color .2s, border-color .2s;
+    cursor: pointer;
+}
+
+#sound-btn:hover { color: var(--c-white); border-color: rgba(255, 255, 255, .35); }

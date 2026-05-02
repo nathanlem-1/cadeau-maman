@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détail du cadeau</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+        body { animation: pageIn .45s var(--ease-out) forwards; }
+
+        /* ================================================================
+           LAYOUT
+        ================================================================ */
+        .detail-page {
+            min-height: 100vh;
+        }
+
+        /* Desktop : 2 colonnes */
+        @media (min-width: 1280px) {
+            .detail-page {
+                display: grid;
+                grid-template-columns: 48% 52%;
+                grid-template-rows: auto 1fr;
+                height: 100vh;
+                overflow: hidden;
+            }
+
+            /* La back-nav s'étale sur toute la largeur */
+            .back-nav { grid-column: 1 / -1; }
+
+            .detail-img-col {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .detail-content-col {
+                grid-column: 2;
+                grid-row: 2;
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+
+        /* ================================================================
+           COLONNE IMAGE
+        ================================================================ */
+        .detail-img-col {
+            background: var(--c-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Breathing room autour de l'image */
+            padding: 3rem 2.5rem;
+        }
+
+        /* Sur mobile : l'image prend la hauteur qu'elle veut */
+        .detail-img-col img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            max-height: 55vh;
+            object-fit: contain;
+        }
+
+        /* Sur desktop : sticky dans sa colonne, image plus grande */
+        @media (min-width: 1280px) {
+            .detail-img-col {
+                position: sticky;
+                top: 0;
+                height: 100%;
+                padding: 4rem 3.5rem;
+                /* Séparateur subtil */
+                border-right: 1px solid rgba(255, 255, 255, .05);
+            }
+
+            .detail-img-col img {
+                max-height: 80vh;
+                width: auto;
+                max-width: 100%;
+            }
+        }
+
+
+        /* ================================================================
+           COLONNE CONTENU
+        ================================================================ */
+        .detail-content-col {
+            padding: 3rem 1.75rem 5rem;
+        }
+
+        @media (min-width: 768px) {
+            .detail-content-col { padding: 4rem 3rem 6rem; }
+        }
+
+        @media (min-width: 1280px) {
+            .detail-content-col { padding: 4.5rem 4rem 6rem; }
+        }
+
+        /* Numéro */
+        .detail-num {
+            display: block;
+            font-size: .53rem;
+            font-weight: 500;
+            letter-spacing: .55em;
+            text-transform: uppercase;
+            color: var(--c-red);
+            margin-bottom: 1rem;
+        }
+
+        /* Titre */
+        .detail-title {
+            font-family: var(--f-title);
+            font-size: clamp(2.2rem, 6vw, 3.8rem);
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            line-height: 1.05;
+            margin-bottom: .7rem;
+        }
+
+        /* Sous-titre */
+        .detail-subtitle {
+            font-family: var(--f-title);
+            font-size: clamp(1rem, 2.5vw, 1.35rem);
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(255, 255, 255, .55);
+            letter-spacing: .02em;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Ornement */
+        .detail-ornament {
+            margin-bottom: 2.5rem;
+        }
+
+        /* Story */
+        .detail-story p {
+            font-size: .88rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .65);
+            line-height: 1.9;
+            margin-bottom: 1.4rem;
+        }
+
+        /* Inclus */
+        .detail-includes {
+            margin-top: 3rem;
+            padding-top: 2.5rem;
+            border-top: 1px solid rgba(255, 255, 255, .07);
+        }
+
+        .detail-includes-label {
+            display: block;
+            font-size: .55rem;
+            font-weight: 500;
+            letter-spacing: .45em;
+            text-transform: uppercase;
+            color: var(--c-red);
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-includes ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .detail-includes li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: .85rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .75);
+            line-height: 1.5;
+        }
+
+        .detail-includes li::before {
+            content: '';
+            display: block;
+            width: 5px;
+            height: 5px;
+            background: var(--c-red);
+            transform: rotate(45deg);
+            flex-shrink: 0;
+        }
+
+        /* CTA */
+        .detail-cta {
+            margin-top: 3.5rem;
+        }
+
+        .btn-choose-final {
+            display: block;
+            width: 100%;
+            font-family: var(--f-body);
+            font-size: .68rem;
+            font-weight: 500;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--c-white);
+            background: var(--c-red);
+            padding: 1.2rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            transition: background .2s, opacity .2s;
+        }
+
+        .btn-choose-final:hover:not(:disabled) { background: var(--c-red-dark); }
+
+        .btn-choose-final:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+        }
+
+        @media (min-width: 1280px) {
+            .btn-choose-final { width: auto; display: inline-block; padding: 1.2rem 3.5rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <a href="index.html?skip=1" class="back-nav" id="btn-back">
+        <span class="back-nav-arrow">←</span>
+        Retour aux cadeaux
+    </a>
+
+    <div class="detail-page" id="detail-page">
+
+        <!-- Colonne image -->
+        <div class="detail-img-col" id="img-col">
+            <!-- Image chargée en JS -->
+        </div>
+
+        <!-- Colonne contenu -->
+        <div class="detail-content-col">
+            <span class="detail-num"     id="detail-num"></span>
+            <h1 class="detail-title"     id="detail-title"></h1>
+            <p class="detail-subtitle"   id="detail-subtitle"></p>
+
+            <div class="ornament detail-ornament" aria-hidden="true">
+                <div class="ornament-diamond"></div>
+            </div>
+
+            <div class="detail-story" id="detail-story"></div>
+
+            <div class="detail-includes">
+                <span class="detail-includes-label">Ce cadeau comprend</span>
+                <ul id="detail-includes-list"></ul>
+            </div>
+
+            <div class="detail-cta">
+                <button class="btn-choose-final" id="btn-choose" type="button">
+                    Je choisis ce cadeau
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+<script src="gifts-data.js"></script>
+<script>
+'use strict';
+
+/* ---- Navigation avec fondu ---- */
+function navigateTo(url) {
+    document.body.classList.add('exit');
+    setTimeout(() => { window.location.href = url; }, 280);
+}
+
+/* ---- Lecture du paramètre ?id ---- */
+const params  = new URLSearchParams(location.search);
+const giftId  = parseInt(params.get('id'), 10);
+const gift    = GIFTS[giftId];
+
+if (!gift) {
+    window.location.replace('index.html');
+}
+
+/* ---- Titre de l'onglet ---- */
+document.title = `${gift.name} — 50 ans d'Agnès`;
+
+/* ---- Mise à jour du lien retour (sans reload de la page) ---- */
+document.getElementById('btn-back').addEventListener('click', (e) => {
+    e.preventDefault();
+    navigateTo('index.html?skip=1');
+});
+
+/* ---- Remplissage du contenu ---- */
+document.getElementById('detail-num').textContent      = gift.num;
+document.getElementById('detail-title').textContent    = gift.name;
+document.getElementById('detail-subtitle').textContent = gift.subtitle;
+document.getElementById('detail-story').innerHTML      = gift.story.map(p => `<p>${p}</p>`).join('');
+document.getElementById('detail-includes-list').innerHTML =
+    gift.includes.map(item => `<li>${item}</li>`).join('');
+
+/* ---- Image ---- */
+const imgCol = document.getElementById('img-col');
+const img    = new Image();
+img.alt      = gift.name;
+img.src      = gift.img;
+imgCol.appendChild(img);
+
+/* ---- Choix final ---- */
+const btnChoose = document.getElementById('btn-choose');
+
+btnChoose.addEventListener('click', () => {
+    btnChoose.disabled     = true;
+    btnChoose.textContent  = '…';
+
+    /* Appel API fire-and-forget */
+    fetch('/api/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ gift: gift.name })
+    }).catch(() => {});
+
+    /* Navigation vers la confirmation */
+    setTimeout(() => navigateTo(`confirmation.html?id=${giftId}`), 250);
+});
+</script>
+</body>
+</html>

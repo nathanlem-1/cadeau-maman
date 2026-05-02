@@ -6,49 +6,12 @@
     <title>Un Cadeau d'Exception — 50 ans</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <style>
-
-        /* ================================================================
-           VARIABLES & RESET
-        ================================================================ */
-        :root {
-            --c-black:    #0A0A0A;
-            --c-white:    #FFFFFF;
-            --c-red:      #C41E3A;
-            --c-red-dark: #9E1830;
-            --c-gold:     #B8860B;
-            --c-surface:  #111111;
-            --c-border:   rgba(255, 255, 255, .07);
-
-            --f-title: 'Cormorant Garamond', Georgia, serif;
-            --f-body:  'Jost', system-ui, sans-serif;
-
-            --ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
-            --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background: var(--c-black);
-            color: var(--c-white);
-            font-family: var(--f-body);
-            font-weight: 300;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        button { cursor: pointer; border: none; background: none; font-family: inherit; }
-
 
         /* ================================================================
            SPLASH
         ================================================================ */
-
         #splash {
             position: fixed;
             inset: 0;
@@ -139,7 +102,6 @@
         /* ================================================================
            RIDEAU
         ================================================================ */
-
         .curtain {
             position: fixed;
             top: 0; bottom: 0;
@@ -155,8 +117,8 @@
             will-change: transform;
         }
 
-        #curtain-left  { left: 0;  transform: translateX(0); }
-        #curtain-right { right: 0; transform: translateX(0); }
+        #curtain-left  { left: 0; }
+        #curtain-right { right: 0; }
 
         #curtain-left::after {
             content: '';
@@ -181,34 +143,8 @@
 
 
         /* ================================================================
-           BOUTON SON
-        ================================================================ */
-
-        #sound-btn {
-            position: fixed;
-            top: 1.25rem;
-            right: 1.25rem;
-            z-index: 200;
-            font-size: .58rem;
-            font-weight: 500;
-            letter-spacing: .22em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,.4);
-            border: 1px solid rgba(255,255,255,.12);
-            padding: .4rem .9rem;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity .5s var(--ease-out), color .2s, border-color .2s;
-        }
-
-        #sound-btn.visible { opacity: 1; pointer-events: auto; }
-        #sound-btn:hover   { color: var(--c-white); border-color: rgba(255,255,255,.35); }
-
-
-        /* ================================================================
            GRILLE DES CADEAUX
         ================================================================ */
-
         #main-content {
             min-height: 100vh;
             padding: 8rem 1.5rem 6rem;
@@ -223,16 +159,6 @@
         }
 
         .reveal-header.show { opacity: 1; transform: none; }
-
-        .eyebrow {
-            display: block;
-            font-size: .58rem;
-            font-weight: 500;
-            letter-spacing: .48em;
-            text-transform: uppercase;
-            color: var(--c-red);
-            margin-bottom: .75rem;
-        }
 
         .reveal-header h1 {
             font-family: var(--f-title);
@@ -261,15 +187,13 @@
                 transform .65s var(--ease-out),
                 border-color .22s,
                 box-shadow .22s;
+            cursor: pointer;
         }
 
         .gift-card.show { opacity: 1; transform: none; }
 
         @media (hover: hover) {
-            .gift-card:hover {
-                border-color: var(--c-red);
-                box-shadow: 0 14px 55px rgba(196,30,58,.13);
-            }
+            .gift-card:hover { border-color: var(--c-red); box-shadow: 0 14px 55px rgba(196,30,58,.13); }
             .gift-card:hover .card-img img { transform: scale(1.04); }
         }
 
@@ -281,519 +205,82 @@
         }
 
         .card-img img {
-            display: block;
-            width: 100%; height: 100%;
+            display: block; width: 100%; height: 100%;
             object-fit: cover;
             transition: transform .7s var(--ease-out);
         }
 
         .card-img-placeholder {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
         }
 
         .card-img-placeholder span {
             font-family: var(--f-title);
-            font-size: .6rem;
-            letter-spacing: .38em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,.15);
+            font-size: .6rem; letter-spacing: .38em;
+            text-transform: uppercase; color: rgba(255,255,255,.15);
         }
 
         .card-body { padding: 2rem 2rem 2.5rem; }
 
         .card-num {
             display: block;
-            font-size: .53rem;
-            font-weight: 500;
-            letter-spacing: .55em;
-            text-transform: uppercase;
-            color: var(--c-red);
-            margin-bottom: .75rem;
+            font-size: .53rem; font-weight: 500;
+            letter-spacing: .55em; text-transform: uppercase;
+            color: var(--c-red); margin-bottom: .75rem;
         }
 
         .card-title {
             font-family: var(--f-title);
             font-size: clamp(1.65rem, 3vw, 2.15rem);
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: .07em;
-            line-height: 1.1;
-            margin-bottom: .75rem;
+            font-weight: 400; text-transform: uppercase;
+            letter-spacing: .07em; line-height: 1.1; margin-bottom: .75rem;
         }
 
         .card-desc {
-            font-size: .82rem;
-            font-weight: 300;
+            font-size: .82rem; font-weight: 300;
             color: rgba(255,255,255,.52);
-            line-height: 1.8;
-            margin-bottom: 1.75rem;
-        }
-
-        .btn-detail {
-            font-size: .63rem;
-            font-weight: 500;
-            letter-spacing: .3em;
-            text-transform: uppercase;
-            color: var(--c-white);
-            background: transparent;
-            border: 1px solid rgba(255,255,255,.2);
-            padding: .85rem 2.25rem;
-            transition: border-color .2s, background .2s;
-        }
-
-        .btn-detail:hover {
-            border-color: var(--c-white);
-            background: rgba(255,255,255,.04);
+            line-height: 1.8; margin-bottom: 1.75rem;
         }
 
 
         /* ================================================================
-           ÉCRAN DÉTAIL
+           RESPONSIVE
         ================================================================ */
-
-        #detail-screen {
-            position: fixed;
-            inset: 0;
-            z-index: 80;
-            background: var(--c-black);
-            overflow-y: scroll;
-            -webkit-overflow-scrolling: touch;
-            transform: translateX(100%);
-            transition: transform .55s var(--ease-out);
-        }
-
-        #detail-screen.open { transform: translateX(0); }
-
-        /* Bouton retour sticky */
-        .detail-back {
-            position: sticky;
-            top: 0;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: .6rem;
-            padding: 1.25rem 1.5rem;
-            background: rgba(10,10,10,.92);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            font-size: .6rem;
-            font-weight: 500;
-            letter-spacing: .3em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,.45);
-            transition: color .2s;
-            border-bottom: 1px solid rgba(255,255,255,.05);
-        }
-
-        .detail-back:hover { color: var(--c-white); }
-
-        .detail-back-arrow {
-            font-size: .9rem;
-            line-height: 1;
-            color: var(--c-red);
-            transition: transform .2s var(--ease-out);
-        }
-
-        .detail-back:hover .detail-back-arrow { transform: translateX(-3px); }
-
-        /* Hero image */
-        .detail-hero {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            overflow: hidden;
-            background: #1c1c1c;
-            position: relative;
-        }
-
-        .detail-hero img {
-            display: block;
-            width: 100%; height: 100%;
-            object-fit: cover;
-        }
-
-        .detail-hero-placeholder {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .detail-hero-placeholder span {
-            font-family: var(--f-title);
-            font-size: .6rem;
-            letter-spacing: .38em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,.15);
-        }
-
-        /* Contenu */
-        .detail-body {
-            padding: 3rem 1.5rem 5rem;
-            max-width: 680px;
-            margin: 0 auto;
-        }
-
-        .detail-num {
-            font-size: .53rem;
-            font-weight: 500;
-            letter-spacing: .55em;
-            text-transform: uppercase;
-            color: var(--c-red);
-            display: block;
-            margin-bottom: .75rem;
-        }
-
-        .detail-title {
-            font-family: var(--f-title);
-            font-size: clamp(2.2rem, 6vw, 3.5rem);
-            font-weight: 300;
-            text-transform: uppercase;
-            letter-spacing: .06em;
-            line-height: 1.1;
-            margin-bottom: .6rem;
-        }
-
-        .detail-subtitle {
-            font-family: var(--f-title);
-            font-size: clamp(1rem, 2.5vw, 1.4rem);
-            font-weight: 300;
-            font-style: italic;
-            color: rgba(255,255,255,.6);
-            letter-spacing: .02em;
-            margin-bottom: 2.5rem;
-        }
-
-        .detail-rule {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            margin-bottom: 2.5rem;
-        }
-
-        .detail-rule::before,
-        .detail-rule::after {
-            content: '';
-            display: block;
-            height: 1px;
-            background: rgba(255,255,255,.12);
-            flex: 1;
-        }
-
-        .detail-rule-diamond {
-            width: 5px;
-            height: 5px;
-            background: var(--c-red);
-            transform: rotate(45deg);
-            flex-shrink: 0;
-        }
-
-        .detail-story p {
-            font-size: .9rem;
-            font-weight: 300;
-            color: rgba(255,255,255,.65);
-            line-height: 1.9;
-            margin-bottom: 1.5rem;
-        }
-
-        /* Liste des inclus */
-        .detail-includes {
-            margin: 2.5rem 0 3.5rem;
-            border-top: 1px solid rgba(255,255,255,.07);
-            padding-top: 2.5rem;
-        }
-
-        .detail-includes-label {
-            font-size: .55rem;
-            font-weight: 500;
-            letter-spacing: .45em;
-            text-transform: uppercase;
-            color: var(--c-red);
-            display: block;
-            margin-bottom: 1.5rem;
-        }
-
-        .detail-includes ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .detail-includes li {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-size: .85rem;
-            font-weight: 300;
-            color: rgba(255,255,255,.75);
-            line-height: 1.5;
-        }
-
-        .detail-includes li::before {
-            content: '';
-            display: block;
-            width: 5px;
-            height: 5px;
-            background: var(--c-red);
-            transform: rotate(45deg);
-            flex-shrink: 0;
-        }
-
-        /* CTA principal */
-        .btn-final-choose {
-            display: block;
-            width: 100%;
-            font-family: var(--f-body);
-            font-size: .68rem;
-            font-weight: 500;
-            letter-spacing: .35em;
-            text-transform: uppercase;
-            color: var(--c-white);
-            background: var(--c-red);
-            padding: 1.2rem 2rem;
-            text-align: center;
-            transition: background .2s;
-        }
-
-        .btn-final-choose:hover { background: var(--c-red-dark); }
-
-
-        /* ================================================================
-           CONFIRMATION
-        ================================================================ */
-
-        #confirmation {
-            position: fixed;
-            inset: 0;
-            z-index: 300;
-            background: var(--c-black);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 2rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity .7s var(--ease-out), visibility .7s;
-        }
-
-        #confirmation.show { opacity: 1; visibility: visible; }
-
-        .conf-eyebrow {
-            font-size: .58rem;
-            font-weight: 500;
-            letter-spacing: .48em;
-            text-transform: uppercase;
-            color: var(--c-red);
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity .6s var(--ease-out) .2s, transform .6s var(--ease-out) .2s;
-        }
-
-        .conf-line1 {
-            font-family: var(--f-title);
-            font-size: clamp(1.1rem, 3vw, 1.75rem);
-            font-weight: 300;
-            font-style: italic;
-            color: rgba(255,255,255,.65);
-            margin-bottom: .4rem;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity .6s var(--ease-out) .45s, transform .6s var(--ease-out) .45s;
-        }
-
-        .conf-chosen {
-            font-family: var(--f-title);
-            font-size: clamp(2.2rem, 7vw, 4.8rem);
-            font-weight: 400;
-            text-transform: uppercase;
-            letter-spacing: .06em;
-            color: var(--c-red);
-            line-height: 1.1;
-            margin-bottom: 2.5rem;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity .6s var(--ease-out) .7s, transform .6s var(--ease-out) .7s;
-        }
-
-        .conf-ornament {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transition: opacity .6s var(--ease-out) .9s;
-        }
-
-        .conf-ornament::before,
-        .conf-ornament::after {
-            content: '';
-            display: block;
-            width: 48px;
-            height: 1px;
-            background: rgba(255,255,255,.18);
-        }
-
-        .conf-ornament-diamond {
-            width: 5px;
-            height: 5px;
-            background: var(--c-red);
-            transform: rotate(45deg);
-        }
-
-        .conf-sub {
-            font-size: .82rem;
-            font-weight: 300;
-            color: rgba(255,255,255,.38);
-            line-height: 1.95;
-            letter-spacing: .03em;
-            max-width: 380px;
-            opacity: 0;
-            transform: translateY(12px);
-            transition: opacity .6s var(--ease-out) 1.05s, transform .6s var(--ease-out) 1.05s;
-        }
-
-        #confirmation.show .conf-eyebrow,
-        #confirmation.show .conf-line1,
-        #confirmation.show .conf-chosen,
-        #confirmation.show .conf-ornament,
-        #confirmation.show .conf-sub {
-            opacity: 1;
-            transform: none;
-        }
-
-
-        /* ================================================================
-           CONFETTIS
-        ================================================================ */
-
-        #confetti-canvas {
-            position: fixed;
-            inset: 0;
-            z-index: 299;
-            pointer-events: none;
-        }
-
-
-        /* ================================================================
-           KEYFRAMES
-        ================================================================ */
-
-        @keyframes aFadeScale {
-            from { opacity: 0; transform: scale(.93); }
-            to   { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes aFadeUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-
-        /* ================================================================
-           TABLETTE — 768px
-        ================================================================ */
-
         @media (min-width: 768px) {
             #main-content { padding: 8rem 3rem 6rem; }
-
             .cards-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
-
             .gift-card:nth-child(3) {
                 grid-column: 1 / -1;
-                max-width: 540px;
-                justify-self: center;
-                width: 100%;
+                max-width: 540px; justify-self: center; width: 100%;
             }
-
-            .detail-hero { aspect-ratio: 21 / 9; }
-
-            .detail-body { padding: 4rem 2rem 6rem; }
         }
-
-
-        /* ================================================================
-           DESKTOP — 1280px
-        ================================================================ */
 
         @media (min-width: 1280px) {
             #main-content { padding: 9rem 5rem 7rem; }
-
             .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
-
             .gift-card:nth-child(3) { grid-column: auto; max-width: none; justify-self: auto; }
-
             .card-img { aspect-ratio: 4 / 5; }
-
-            /* Layout 2 colonnes sur la page détail */
-            #detail-screen {
-                overflow: hidden;
-                display: flex;
-                flex-direction: column;
-            }
-
-            .detail-layout {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                flex: 1;
-                min-height: 0;
-                overflow: hidden;
-            }
-
-            .detail-hero {
-                aspect-ratio: auto;
-                height: 100%;
-                overflow: hidden;
-            }
-
-            .detail-body {
-                height: 100%;
-                overflow-y: scroll;
-                -webkit-overflow-scrolling: touch;
-                padding: 4rem 3.5rem 6rem;
-                max-width: none;
-            }
         }
 
     </style>
 </head>
 <body>
 
-<!-- ================================================================
-     SPLASH
-================================================================ -->
 <section id="splash">
     <div>
         <div class="splash-mono">Agnès</div>
         <p class="splash-sub">Maman</p>
     </div>
     <p class="splash-tagline">Un cadeau à la hauteur de tes 50 ans.</p>
-    <div class="splash-rule" aria-hidden="true">
-        <div class="splash-rule-dot"></div>
-    </div>
+    <div class="splash-rule" aria-hidden="true"><div class="splash-rule-dot"></div></div>
     <button id="btn-discover" type="button">Découvrir</button>
 </section>
 
-
-<!-- ================================================================
-     RIDEAU
-================================================================ -->
 <div id="curtain-left"  class="curtain" aria-hidden="true"></div>
 <div id="curtain-right" class="curtain" aria-hidden="true"></div>
 
-
-<!-- ================================================================
-     GRILLE DES CADEAUX
-================================================================ -->
 <main id="main-content">
-
     <header class="reveal-header" id="reveal-header">
         <span class="eyebrow">Ton anniversaire</span>
         <h1>Choisis ton cadeau</h1>
@@ -809,7 +296,7 @@
                 <span class="card-num">— I —</span>
                 <h2 class="card-title">Paris &amp; Le Roi Lion</h2>
                 <p class="card-desc">Un week-end à Paris avec hôtel haut de gamme et places pour le spectacle Le Roi Lion.</p>
-                <button class="btn-detail" type="button">Détails</button>
+                <button class="btn-outline" type="button">Détails</button>
             </div>
         </article>
 
@@ -821,7 +308,7 @@
                 <span class="card-num">— II —</span>
                 <h2 class="card-title">Escapade à Deauville</h2>
                 <p class="card-desc">Un week-end normand dans un hôtel d'exception, face à la mer.</p>
-                <button class="btn-detail" type="button">Détails</button>
+                <button class="btn-outline" type="button">Détails</button>
             </div>
         </article>
 
@@ -833,169 +320,44 @@
                 <span class="card-num">— III —</span>
                 <h2 class="card-title">Le Sac de tes Rêves</h2>
                 <p class="card-desc">Une cagnotte réunie avec amour pour t'offrir le sac tant désiré.</p>
-                <button class="btn-detail" type="button">Détails</button>
+                <button class="btn-outline" type="button">Détails</button>
             </div>
         </article>
 
     </div>
 </main>
 
+<button id="sound-btn" type="button">♪ Son</button>
 
-<!-- ================================================================
-     PAGE DÉTAIL (slide depuis la droite)
-================================================================ -->
-<div id="detail-screen" role="dialog" aria-modal="true" aria-label="Détails du cadeau">
-
-    <button class="detail-back" id="btn-back" type="button">
-        <span class="detail-back-arrow">←</span>
-        Retour aux cadeaux
-    </button>
-
-    <div class="detail-layout">
-
-        <div class="detail-hero" id="detail-hero">
-            <div class="detail-hero-placeholder" aria-hidden="true">
-                <span id="detail-hero-placeholder-text"></span>
-            </div>
-        </div>
-
-        <div class="detail-body">
-            <span class="detail-num" id="detail-num"></span>
-            <h2 class="detail-title" id="detail-title"></h2>
-            <p class="detail-subtitle" id="detail-subtitle"></p>
-
-            <div class="detail-rule" aria-hidden="true">
-                <div class="detail-rule-diamond"></div>
-            </div>
-
-            <div class="detail-story" id="detail-story"></div>
-
-            <div class="detail-includes">
-                <span class="detail-includes-label">Ce cadeau comprend</span>
-                <ul id="detail-includes-list"></ul>
-            </div>
-
-            <button class="btn-final-choose" id="btn-final-choose" type="button">
-                Je choisis ce cadeau
-            </button>
-        </div>
-
-    </div>
-</div>
-
-
-<!-- ================================================================
-     CONFIRMATION
-================================================================ -->
-<canvas id="confetti-canvas" aria-hidden="true"></canvas>
-
-<div id="confirmation" role="dialog" aria-modal="true" aria-labelledby="conf-chosen-text">
-    <span class="conf-eyebrow">Félicitations</span>
-    <p class="conf-line1">Tu as choisi</p>
-    <h2 class="conf-chosen" id="conf-chosen-text"></h2>
-    <div class="conf-ornament" aria-hidden="true">
-        <div class="conf-ornament-diamond"></div>
-    </div>
-    <p class="conf-sub">
-        Les organisateurs ont été prévenus.<br>
-        Profite de ce moment.
-    </p>
-</div>
-
-
-<!-- Son (optionnel — déposer fanfare.mp3) -->
-<button id="sound-btn" type="button" title="Activer / couper le son">♪ Son</button>
-
-
-<!-- ================================================================
-     JAVASCRIPT
-================================================================ -->
+<script src="gifts-data.js"></script>
 <script>
 'use strict';
 
-/* ================================================================
-   DONNÉES DES CADEAUX
-================================================================ */
-const GIFTS = {
-    1: {
-        name:     'Paris & Le Roi Lion',
-        num:      '— I —',
-        img:      'gift-1.jpg',
-        subtitle: 'Un week-end de magie dans la Ville Lumière',
-        story: [
-            'Paris t\'attend pour un week-end inoubliable. Au programme : les lumières de la capitale, l\'effervescence d\'un hôtel d\'exception, et l\'émotion d\'un spectacle qui a traversé les frontières et ému des millions de spectateurs à travers le monde.',
-            'Le Roi Lion, c\'est bien plus qu\'un musical. C\'est une fresque vivante portée par une mise en scène époustouflante, des costumes sublimes et des chants qui résonnent longtemps après le rideau tombé. Deux places réservées rien que pour toi.'
-        ],
-        includes: [
-            'Spectacle Le Roi Lion — 2 places au Théâtre Mogador',
-            'Hôtel haut de gamme au cœur de Paris',
-            'Week-end complet — 2 jours, 2 nuits'
-        ]
-    },
-    2: {
-        name:     'Escapade à Deauville',
-        num:      '— II —',
-        img:      'gift-2.jpg',
-        subtitle: 'La Normandie dans toute sa splendeur',
-        story: [
-            'À deux heures de Paris, Deauville t\'attend. Les planches, la mer grise et lumineuse, les façades à colombages — tout ici invite à ralentir, à respirer, à savourer chaque instant sans se presser. Une parenthèse hors du temps.',
-            'Un hôtel d\'exception, un accès spa pour un soin bien mérité, et une table gastronomique pour finir la journée comme il se doit : les yeux posés sur la mer, le verre levé, entourée de ceux qui t\'aiment.'
-        ],
-        includes: [
-            '1 ou 2 nuits dans un hôtel d\'exception',
-            'Accès SPA & soins',
-            'Dîner gastronomique face à la mer'
-        ]
-    },
-    3: {
-        name:     'Le Sac de tes Rêves',
-        num:      '— III —',
-        img:      'gift-3.jpg',
-        subtitle: 'Pour se faire plaisir, sans compromis',
-        story: [
-            'Il y a des objets qu\'on désire longtemps avant d\'oser se les offrir. Ce cadeau, c\'est une invitation à franchir ce pas — avec tout l\'amour de ceux qui te connaissent et qui savent exactement ce que tu vaux.',
-            'Une cagnotte réunie avec soin, pour que tu puisses choisir ce que tu veux vraiment. Prends ton temps. Flâne dans ta boutique préférée. Essaie. Hésite. Décide. Aucune contrainte, juste le plaisir pur de se faire plaisir.'
-        ],
-        includes: [
-            'Une cagnotte réunie avec amour',
-            'Pour le sac que tu as toujours voulu',
-            'À ton rythme, sans compromis'
-        ]
-    }
-};
+/* ---- Navigation avec fondu ---- */
+function navigateTo(url) {
+    document.body.classList.add('exit');
+    setTimeout(() => { window.location.href = url; }, 280);
+}
 
+/* ---- Mode skip (retour depuis une page détail) ---- */
+const skipIntro = new URLSearchParams(location.search).has('skip');
+const splash    = document.getElementById('splash');
+const cLeft     = document.getElementById('curtain-left');
+const cRight    = document.getElementById('curtain-right');
+const revealHdr = document.getElementById('reveal-header');
+const cards     = document.querySelectorAll('.gift-card');
 
-/* ================================================================
-   ÉLÉMENTS
-================================================================ */
-const splash        = document.getElementById('splash');
-const btnDiscover   = document.getElementById('btn-discover');
-const cLeft         = document.getElementById('curtain-left');
-const cRight        = document.getElementById('curtain-right');
-const revealHdr     = document.getElementById('reveal-header');
-const cards         = document.querySelectorAll('.gift-card');
-const detailScreen  = document.getElementById('detail-screen');
-const btnBack       = document.getElementById('btn-back');
-const detailHero    = document.getElementById('detail-hero');
-const detailPhText  = document.getElementById('detail-hero-placeholder-text');
-const detailNum     = document.getElementById('detail-num');
-const detailTitle   = document.getElementById('detail-title');
-const detailSub     = document.getElementById('detail-subtitle');
-const detailStory   = document.getElementById('detail-story');
-const detailList    = document.getElementById('detail-includes-list');
-const btnFinalChoose= document.getElementById('btn-final-choose');
-const confirmEl     = document.getElementById('confirmation');
-const confChosen    = document.getElementById('conf-chosen-text');
-const soundBtn      = document.getElementById('sound-btn');
-const canvas        = document.getElementById('confetti-canvas');
-const ctx           = canvas.getContext('2d');
+if (skipIntro) {
+    splash.style.display    = 'none';
+    cLeft.style.transition  = 'none';
+    cRight.style.transition = 'none';
+    cLeft.classList.add('open');
+    cRight.classList.add('open');
+    revealHdr.classList.add('show');
+    cards.forEach(card => card.classList.add('show'));
+}
 
-let currentGiftId   = null;
-
-
-/* ================================================================
-   IMAGES
-================================================================ */
+/* ---- Images ---- */
 [1, 2, 3].forEach(n => {
     const wrap = document.getElementById(`img-wrap-${n}`);
     const img  = new Image();
@@ -1004,12 +366,10 @@ let currentGiftId   = null;
     img.src    = GIFTS[n].img;
 });
 
-
-/* ================================================================
-   SON (optionnel)
-================================================================ */
+/* ---- Son ---- */
+const soundBtn   = document.getElementById('sound-btn');
 let soundEnabled = true;
-let audio = null;
+let audio        = null;
 try { audio = new Audio('fanfare.mp3'); audio.preload = 'auto'; } catch(e) {}
 
 soundBtn.addEventListener('click', () => {
@@ -1017,20 +377,14 @@ soundBtn.addEventListener('click', () => {
     soundBtn.textContent = soundEnabled ? '♪ Son' : '♪ Muet';
 });
 
-function playFanfare() {
-    if (soundEnabled && audio) { audio.currentTime = 0; audio.play().catch(() => {}); }
-}
+/* ---- Splash → révélation ---- */
+const btnDiscover = document.getElementById('btn-discover');
 
-
-/* ================================================================
-   SÉQUENCE SPLASH → GRILLE
-================================================================ */
 btnDiscover.addEventListener('click', () => {
     splash.classList.add('exit');
-    soundBtn.classList.add('visible');
 
     setTimeout(() => {
-        playFanfare();
+        if (soundEnabled && audio) { audio.currentTime = 0; audio.play().catch(() => {}); }
         cLeft.classList.add('open');
         cRight.classList.add('open');
     }, 280);
@@ -1041,139 +395,16 @@ btnDiscover.addEventListener('click', () => {
     });
 });
 
-
-/* ================================================================
-   OUVERTURE PAGE DÉTAIL
-================================================================ */
-function openDetail(id) {
-    const g = GIFTS[id];
-    currentGiftId = id;
-
-    // Image hero
-    detailHero.innerHTML = '';
-    const placeholder = document.createElement('div');
-    placeholder.className = 'detail-hero-placeholder';
-    placeholder.innerHTML = `<span>${g.name}</span>`;
-    detailHero.appendChild(placeholder);
-
-    const img = new Image();
-    img.alt    = g.name;
-    img.onload = () => { detailHero.innerHTML = ''; detailHero.appendChild(img); };
-    img.src    = g.img;
-
-    // Textes
-    detailNum.textContent  = g.num;
-    detailTitle.textContent = g.name;
-    detailSub.textContent  = g.subtitle;
-
-    detailStory.innerHTML = g.story.map(p => `<p>${p}</p>`).join('');
-
-    detailList.innerHTML = g.includes
-        .map(item => `<li>${item}</li>`)
-        .join('');
-
-    // Ouvre le panneau + scroll en haut
-    detailScreen.scrollTop = 0;
-    detailScreen.classList.add('open');
-}
-
+/* ---- Clic sur une carte → page détail ---- */
 cards.forEach(card => {
-    card.querySelector('.btn-detail').addEventListener('click', () => {
-        openDetail(parseInt(card.dataset.id, 10));
+    card.querySelector('.btn-outline').addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateTo(`cadeau.html?id=${card.dataset.id}`);
+    });
+    card.addEventListener('click', () => {
+        navigateTo(`cadeau.html?id=${card.dataset.id}`);
     });
 });
-
-
-/* ================================================================
-   FERMETURE PAGE DÉTAIL
-================================================================ */
-function closeDetail() {
-    detailScreen.classList.remove('open');
-}
-
-btnBack.addEventListener('click', closeDetail);
-
-
-/* ================================================================
-   CHOIX FINAL → EMAIL + CONFIRMATION
-================================================================ */
-btnFinalChoose.addEventListener('click', () => {
-    const g = GIFTS[currentGiftId];
-
-    closeDetail();
-
-    // Confirmation overlay
-    confChosen.textContent = g.name;
-    confirmEl.classList.add('show');
-    launchConfetti();
-
-    // Email via Resend
-    fetch('/api/notify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ gift: g.name })
-    }).catch(() => {});
-});
-
-
-/* ================================================================
-   CONFETTIS
-================================================================ */
-const CONFETTI_COLORS = ['#C41E3A','#C41E3A','#B8860B','#D4AF37','#8B1020','#FFFFFF'];
-let particles = [];
-let rafId     = null;
-
-function resizeCanvas() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas, { passive: true });
-resizeCanvas();
-
-function makeParticle() {
-    return {
-        x: Math.random() * canvas.width, y: -12,
-        vx: (Math.random() - .5) * 1.5,  vy: Math.random() * 2.5 + .8,
-        w: Math.random() * 7 + 2,         h: Math.random() * 14 + 4,
-        angle: Math.random() * Math.PI * 2, spin: (Math.random() - .5) * .11,
-        color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
-        alpha: 1
-    };
-}
-
-function tickConfetti() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(p => {
-        p.x += p.vx; p.y += p.vy; p.angle += p.spin;
-        if (p.y > canvas.height * .72) p.alpha -= .016;
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, p.alpha);
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.angle);
-        ctx.fillStyle = p.color;
-        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-        ctx.restore();
-    });
-    particles = particles.filter(p => p.alpha > 0 && p.y < canvas.height + 20);
-    if (particles.length > 0) {
-        rafId = requestAnimationFrame(tickConfetti);
-    } else {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        rafId = null;
-    }
-}
-
-function launchConfetti() {
-    if (rafId) cancelAnimationFrame(rafId);
-    particles = [];
-    let bursts = 0;
-    const interval = setInterval(() => {
-        for (let i = 0; i < 10; i++) particles.push(makeParticle());
-        if (++bursts >= 22) clearInterval(interval);
-    }, 55);
-    tickConfetti();
-}
 </script>
-
 </body>
 </html>
