@@ -72,7 +72,7 @@ export default async function handler(req, res) {
     if (!response.ok) {
         const err = await response.text();
         console.error('Resend error:', err);
-        return res.status(502).json({ error: 'Email delivery failed' });
+        return res.status(502).json({ error: 'Email delivery failed', detail: err });
     }
 
     return res.status(200).json({ ok: true });
