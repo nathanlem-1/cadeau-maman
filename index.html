@@ -794,10 +794,19 @@ btnDiscover.addEventListener('click', () => {
 /* ---- Sélection d'un cadeau ---- */
 cards.forEach(card => {
     card.querySelector('.btn-choose').addEventListener('click', () => {
-        confChosen.textContent = card.dataset.gift;
+        const gift = card.dataset.gift;
+
+        confChosen.textContent = gift;
         confirmEl.classList.add('show');
         btnDetails.setAttribute('tabindex', '0');
         launchConfetti();
+
+        // Notification email — fire and forget, n'affecte pas l'UX
+        fetch('/api/notify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ gift })
+        }).catch(() => {});
     });
 });
 
