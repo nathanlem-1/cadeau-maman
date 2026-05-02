@@ -14,9 +14,10 @@ html.locked body { overflow: hidden; }
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2.5rem;
-    padding: 2rem;
+    gap: clamp(.75rem, 2.5vh, 2rem);
+    padding: clamp(1rem, 4vw, 2rem);
     text-align: center;
+    overflow: hidden;
     transition: opacity .7s var(--ease-out), visibility .7s;
 }
 
@@ -33,7 +34,7 @@ html.locked body { overflow: hidden; }
 
 .splash-mono {
     font-family: var(--f-title);
-    font-size: clamp(4rem, 14vw, 9rem);
+    font-size: clamp(3rem, 12vw, 9rem);
     font-weight: 300;
     color: var(--c-red);
     line-height: 1;
@@ -49,7 +50,7 @@ html.locked body { overflow: hidden; }
     letter-spacing: .45em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, .4);
-    margin-top: .5rem;
+    margin-top: .3rem;
     opacity: 0;
     animation: aFadeUp .9s var(--ease-out) 1.2s forwards;
 }
