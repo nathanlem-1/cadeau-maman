@@ -6,282 +6,12 @@
     <title>Un Cadeau d'Exception — 50 ans</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="style.css">
-    <style>
-
-        /* Bloque le scroll pendant splash/rideau uniquement */
-        html.locked,
-        html.locked body { overflow: hidden; }
-
-        /* ================================================================
-           SPLASH
-        ================================================================ */
-        #splash {
-            position: fixed;
-            inset: 0;
-            z-index: 100;
-            background: var(--c-black);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2.5rem;
-            padding: 2rem;
-            text-align: center;
-            transition: opacity .7s var(--ease-out), visibility .7s;
-        }
-
-        #splash.exit { opacity: 0; visibility: hidden; pointer-events: none; }
-
-        /* Canvas particules — derrière tout le contenu du splash */
-        #splash-bg {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Contenu du splash au-dessus du canvas */
-        #splash > *:not(#splash-bg) { position: relative; z-index: 1; }
-
-        .splash-mono {
-            font-family: var(--f-title);
-            font-size: clamp(4rem, 14vw, 9rem);
-            font-weight: 300;
-            color: var(--c-red);
-            line-height: 1;
-            letter-spacing: .04em;
-            opacity: 0;
-            animation: aFadeScale 2s var(--ease-out) .3s forwards;
-        }
-
-        .splash-sub {
-            font-family: var(--f-body);
-            font-size: .65rem;
-            font-weight: 500;
-            letter-spacing: .45em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, .4);
-            margin-top: .5rem;
-            opacity: 0;
-            animation: aFadeUp .9s var(--ease-out) 1.2s forwards;
-        }
-
-        .splash-tagline {
-            font-family: var(--f-title);
-            font-size: clamp(1.1rem, 3.5vw, 1.9rem);
-            font-weight: 300;
-            font-style: italic;
-            letter-spacing: .03em;
-            color: rgba(255, 255, 255, .85);
-            opacity: 0;
-            animation: aFadeUp .9s var(--ease-out) 1.9s forwards;
-        }
-
-        .splash-rule {
-            display: flex;
-            align-items: center;
-            gap: 1.25rem;
-            opacity: 0;
-            animation: aFadeUp .9s var(--ease-out) 2.1s forwards;
-        }
-
-        .splash-rule::before,
-        .splash-rule::after {
-            content: '';
-            display: block;
-            width: 36px;
-            height: 1px;
-            background: var(--c-red);
-        }
-
-        .splash-rule-dot { width: 4px; height: 4px; background: var(--c-red); }
-
-        #btn-discover {
-            font-family: var(--f-body);
-            font-size: .65rem;
-            font-weight: 500;
-            letter-spacing: .35em;
-            text-transform: uppercase;
-            color: var(--c-white);
-            border: 1px solid var(--c-red);
-            padding: 1rem 3.5rem;
-            transition: background .22s, color .22s, border-color .22s;
-            opacity: 0;
-            animation: aFadeUp .9s var(--ease-out) 2.5s forwards;
-        }
-
-        #btn-discover:hover { background: var(--c-white); color: var(--c-black); border-color: var(--c-white); }
-
-
-        /* ================================================================
-           RIDEAU
-        ================================================================ */
-        .curtain {
-            position: fixed;
-            top: 0; bottom: 0;
-            width: 50%;
-            z-index: 60;
-            background-color: var(--c-red);
-            background-image: repeating-linear-gradient(
-                91deg,
-                rgba(0,0,0,.13) 0, rgba(0,0,0,0) 2px,
-                rgba(0,0,0,0) 5px, rgba(0,0,0,.07) 7px
-            );
-            transition: transform 1.9s var(--ease-curtain);
-            will-change: transform;
-        }
-
-        #curtain-left  { left: 0; }
-        #curtain-right { right: 0; }
-
-        #curtain-left::after {
-            content: '';
-            position: absolute;
-            right: 0; top: 0; bottom: 0;
-            width: 70px;
-            background: linear-gradient(to right, transparent, rgba(0,0,0,.38));
-            pointer-events: none;
-        }
-
-        #curtain-right::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 0; bottom: 0;
-            width: 70px;
-            background: linear-gradient(to left, transparent, rgba(0,0,0,.38));
-            pointer-events: none;
-        }
-
-        #curtain-left.open  { transform: translateX(-100%); }
-        #curtain-right.open { transform: translateX(100%); }
-
-
-        /* ================================================================
-           GRILLE DES CADEAUX
-        ================================================================ */
-        #main-content {
-            min-height: 100vh;
-            padding: 8rem 1.5rem 6rem;
-        }
-
-        .reveal-header {
-            text-align: center;
-            margin-bottom: 5rem;
-            opacity: 0;
-            transform: translateY(14px);
-            transition: opacity .8s var(--ease-out), transform .8s var(--ease-out);
-        }
-
-        .reveal-header.show { opacity: 1; transform: none; }
-
-        .reveal-header h1 {
-            font-family: var(--f-title);
-            font-size: clamp(2rem, 5vw, 3.8rem);
-            font-weight: 300;
-            letter-spacing: .04em;
-            line-height: 1.15;
-        }
-
-        .cards-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .gift-card {
-            background: var(--c-surface);
-            border: 1px solid var(--c-border);
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(28px);
-            transition:
-                opacity .65s var(--ease-out),
-                transform .65s var(--ease-out),
-                border-color .22s,
-                box-shadow .22s;
-            cursor: pointer;
-        }
-
-        .gift-card.show { opacity: 1; transform: none; }
-
-        @media (hover: hover) {
-            .gift-card:hover { border-color: var(--c-red); box-shadow: 0 14px 55px rgba(196,30,58,.13); }
-            .gift-card:hover .card-img img { transform: scale(1.04); }
-        }
-
-        .card-img {
-            aspect-ratio: 16 / 9;
-            overflow: hidden;
-            background: #1c1c1c;
-            position: relative;
-        }
-
-        .card-img img {
-            display: block; width: 100%; height: 100%;
-            object-fit: cover;
-            transition: transform .7s var(--ease-out);
-        }
-
-        .card-img-placeholder {
-            position: absolute; inset: 0;
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        .card-img-placeholder span {
-            font-family: var(--f-title);
-            font-size: .6rem; letter-spacing: .38em;
-            text-transform: uppercase; color: rgba(255,255,255,.15);
-        }
-
-        .card-body { padding: 2rem 2rem 2.5rem; }
-
-        .card-num {
-            display: block;
-            font-size: .53rem; font-weight: 500;
-            letter-spacing: .55em; text-transform: uppercase;
-            color: var(--c-red); margin-bottom: .75rem;
-        }
-
-        .card-title {
-            font-family: var(--f-title);
-            font-size: clamp(1.65rem, 3vw, 2.15rem);
-            font-weight: 400; text-transform: uppercase;
-            letter-spacing: .07em; line-height: 1.1; margin-bottom: .75rem;
-        }
-
-        .card-desc {
-            font-size: .82rem; font-weight: 300;
-            color: rgba(255,255,255,.52);
-            line-height: 1.8; margin-bottom: 1.75rem;
-        }
-
-
-        /* ================================================================
-           RESPONSIVE
-        ================================================================ */
-        @media (min-width: 768px) {
-            #main-content { padding: 8rem 3rem 6rem; }
-            .cards-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
-            .gift-card:nth-child(3) {
-                grid-column: 1 / -1;
-                max-width: 540px; justify-self: center; width: 100%;
-            }
-        }
-
-        @media (min-width: 1280px) {
-            #main-content { padding: 9rem 5rem 7rem; }
-            .cards-grid { grid-template-columns: repeat(3, 1fr); gap: 2.5rem; }
-            .gift-card:nth-child(3) { grid-column: auto; max-width: none; justify-self: auto; }
-            .card-img { aspect-ratio: 4 / 5; }
-        }
-
-    </style>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/home.css">
 </head>
 <body>
 
+<!-- SPLASH -->
 <section id="splash">
     <canvas id="splash-bg" aria-hidden="true"></canvas>
     <div>
@@ -293,9 +23,11 @@
     <button id="btn-discover" type="button">Découvrir</button>
 </section>
 
+<!-- RIDEAU -->
 <div id="curtain-left"  class="curtain" aria-hidden="true"></div>
 <div id="curtain-right" class="curtain" aria-hidden="true"></div>
 
+<!-- CADEAUX -->
 <main id="main-content">
     <header class="reveal-header" id="reveal-header">
         <span class="eyebrow">Ton anniversaire</span>
@@ -304,19 +36,19 @@
 
     <div class="cards-grid">
 
-        <article class="gift-card" data-id="1" data-gift="Paris &amp; Le Roi Lion">
+        <article class="gift-card" data-href="/cadeau/1">
             <div class="card-img" id="img-wrap-1">
                 <div class="card-img-placeholder" aria-hidden="true"><span>gift-1.jpg</span></div>
             </div>
             <div class="card-body">
                 <span class="card-num">— I —</span>
                 <h2 class="card-title">Paris &amp; Le Roi Lion</h2>
-                <p class="card-desc">Un week-end à Paris avec hôtel haut de gamme et places pour le spectacle Le Roi Lion.</p>
+                <p class="card-desc">Un week-end à Paris avec hôtel et places pour le spectacle Le Roi Lion.</p>
                 <button class="btn-outline" type="button">Détails</button>
             </div>
         </article>
 
-        <article class="gift-card" data-id="2" data-gift="Escapade à Deauville">
+        <article class="gift-card" data-href="/cadeau/2">
             <div class="card-img" id="img-wrap-2">
                 <div class="card-img-placeholder" aria-hidden="true"><span>gift-2.jpg</span></div>
             </div>
@@ -328,7 +60,7 @@
             </div>
         </article>
 
-        <article class="gift-card" data-id="3" data-gift="Le Sac de tes Rêves">
+        <article class="gift-card" data-href="/cadeau/3">
             <div class="card-img" id="img-wrap-3">
                 <div class="card-img-placeholder" aria-hidden="true"><span>gift-3.jpg</span></div>
             </div>
@@ -345,17 +77,15 @@
 
 <button id="sound-btn" type="button">♪ Son</button>
 
-<script src="gifts-data.js"></script>
+<script src="/gifts-data.js"></script>
 <script>
 'use strict';
 
-/* ---- Navigation avec fondu ---- */
 function navigateTo(url) {
     document.body.classList.add('exit');
     setTimeout(() => { window.location.href = url; }, 280);
 }
 
-/* ---- Mode skip (retour depuis une page détail) ---- */
 const skipIntro = new URLSearchParams(location.search).has('skip');
 const splash    = document.getElementById('splash');
 const cLeft     = document.getElementById('curtain-left');
@@ -363,7 +93,6 @@ const cRight    = document.getElementById('curtain-right');
 const revealHdr = document.getElementById('reveal-header');
 const cards     = document.querySelectorAll('.gift-card');
 
-// Verrouille le scroll au démarrage (sauf si on revient d'une page détail)
 if (!skipIntro) {
     document.documentElement.classList.add('locked');
 }
@@ -378,30 +107,28 @@ if (skipIntro) {
     cards.forEach(card => card.classList.add('show'));
 }
 
-/* ---- Images ---- */
+/* Images */
 [1, 2, 3].forEach(n => {
     const wrap = document.getElementById(`img-wrap-${n}`);
     const img  = new Image();
     img.alt    = GIFTS[n].name;
     img.onload = () => { wrap.innerHTML = ''; wrap.appendChild(img); };
-    img.src    = GIFTS[n].img;
+    img.src    = `/${GIFTS[n].img}`;
 });
 
-/* ---- Son ---- */
+/* Son */
 const soundBtn   = document.getElementById('sound-btn');
 let soundEnabled = true;
 let audio        = null;
-try { audio = new Audio('fanfare.mp3'); audio.preload = 'auto'; } catch(e) {}
+try { audio = new Audio('/fanfare.mp3'); audio.preload = 'auto'; } catch(e) {}
 
 soundBtn.addEventListener('click', () => {
     soundEnabled = !soundEnabled;
     soundBtn.textContent = soundEnabled ? '♪ Son' : '♪ Muet';
 });
 
-/* ---- Splash → révélation ---- */
-const btnDiscover = document.getElementById('btn-discover');
-
-btnDiscover.addEventListener('click', () => {
+/* Splash → révélation */
+document.getElementById('btn-discover').addEventListener('click', () => {
     splash.classList.add('exit');
 
     setTimeout(() => {
@@ -414,115 +141,78 @@ btnDiscover.addEventListener('click', () => {
     cards.forEach((card, i) => {
         setTimeout(() => card.classList.add('show'), 1900 + i * 280);
     });
-
-    // Déverrouille le scroll une fois toutes les cartes visibles
     setTimeout(() => document.documentElement.classList.remove('locked'), 1900 + 2 * 280 + 600);
 });
 
-/* ================================================================
-   PARTICULES AMBIANTES — SPLASH
-================================================================ */
+/* Navigation vers les cadeaux */
+cards.forEach(card => {
+    const go = () => navigateTo(card.dataset.href);
+    card.querySelector('.btn-outline').addEventListener('click', e => { e.stopPropagation(); go(); });
+    card.addEventListener('click', go);
+});
+
+/* Particules ambiantes splash */
 (function () {
-    if (skipIntro) return; // inutile si on bypass le splash
+    if (skipIntro) return;
+    const cv    = document.getElementById('splash-bg');
+    const cx    = cv.getContext('2d');
+    const COLORS = ['#C41E3A','#C41E3A','#B8860B','#D4AF37'];
+    let pts = [], alive = true;
 
-    const cv  = document.getElementById('splash-bg');
-    const cx  = cv.getContext('2d');
-    const COLORS = ['#C41E3A', '#C41E3A', '#B8860B', '#D4AF37'];
-    let pts   = [];
-    let alive = true;
-
-    function resize() {
-        cv.width  = window.innerWidth;
-        cv.height = window.innerHeight;
-    }
+    function resize() { cv.width = window.innerWidth; cv.height = window.innerHeight; }
     window.addEventListener('resize', resize, { passive: true });
     resize();
 
     function spawn() {
         return {
-            x:       Math.random() * cv.width,
-            y:       cv.height * (.3 + Math.random() * .7),
-            vx:      (Math.random() - .5) * .35,
-            vy:      -(Math.random() * .55 + .18),
-            size:    Math.random() * 3 + 1,           // 1–4 px
+            x: Math.random() * cv.width,
+            y: cv.height * (.3 + Math.random() * .7),
+            vx: (Math.random() - .5) * .35,
+            vy: -(Math.random() * .55 + .18),
+            size: Math.random() * 3 + 1,
             diamond: Math.random() > .45,
-            color:   COLORS[Math.floor(Math.random() * COLORS.length)],
-            alpha:   0,
-            maxA:    Math.random() * .38 + .08,       // 0.08–0.46 max
-            phase:   Math.random() * Math.PI * 2,
-            freq:    Math.random() * .018 + .008
+            color: COLORS[Math.floor(Math.random() * COLORS.length)],
+            alpha: 0, maxA: Math.random() * .38 + .08,
+            phase: Math.random() * Math.PI * 2,
+            freq: Math.random() * .018 + .008
         };
     }
 
-    // Pré-peupler avec des particules déjà en vol
     for (let i = 0; i < 30; i++) {
         const p = spawn();
-        p.y     = Math.random() * cv.height;
+        p.y = Math.random() * cv.height;
         p.alpha = Math.random() * p.maxA;
         pts.push(p);
     }
 
     function tick() {
         if (!alive) { cx.clearRect(0, 0, cv.width, cv.height); return; }
-
         cx.clearRect(0, 0, cv.width, cv.height);
-
-        // Spawn aléatoire
         if (pts.length < 55 && Math.random() < .07) pts.push(spawn());
-
         pts.forEach(p => {
             p.phase += p.freq;
-            p.x     += p.vx + Math.sin(p.phase) * .25;
-            p.y     += p.vy;
-
-            // Fade-in
+            p.x += p.vx + Math.sin(p.phase) * .25;
+            p.y += p.vy;
             if (p.alpha < p.maxA) p.alpha = Math.min(p.alpha + .006, p.maxA);
-            // Fade-out en approchant du haut
             if (p.y < cv.height * .18) p.alpha = Math.max(0, p.alpha - .01);
-
             if (p.alpha <= 0) return;
-
             cx.save();
             cx.globalAlpha = p.alpha;
             cx.fillStyle   = p.color;
             cx.translate(p.x, p.y);
-
-            if (p.diamond) {
-                cx.rotate(Math.PI / 4);
-                cx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-            } else {
-                cx.beginPath();
-                cx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
-                cx.fill();
-            }
-
+            if (p.diamond) { cx.rotate(Math.PI / 4); cx.fillRect(-p.size/2, -p.size/2, p.size, p.size); }
+            else { cx.beginPath(); cx.arc(0, 0, p.size/2, 0, Math.PI*2); cx.fill(); }
             cx.restore();
         });
-
         pts = pts.filter(p => p.alpha > 0 && p.y > -10);
-
         requestAnimationFrame(tick);
     }
-
     tick();
 
-    // Arrêt propre quand le splash sort
     document.getElementById('btn-discover').addEventListener('click', () => {
         setTimeout(() => { alive = false; }, 800);
     }, { once: true });
 }());
-
-
-/* ---- Clic sur une carte → page détail ---- */
-cards.forEach(card => {
-    card.querySelector('.btn-outline').addEventListener('click', (e) => {
-        e.stopPropagation();
-        navigateTo(`cadeau.html?id=${card.dataset.id}`);
-    });
-    card.addEventListener('click', () => {
-        navigateTo(`cadeau.html?id=${card.dataset.id}`);
-    });
-});
 </script>
 </body>
 </html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escapade à Deauville — 50 ans d'Agnès</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/cadeau.css">
+</head>
+<body>
+
+    <a href="/" class="back-nav" id="btn-back">
+        <span class="back-nav-arrow">←</span>
+        Retour aux cadeaux
+    </a>
+
+    <div class="detail-page">
+        <div class="detail-img-col" id="img-col"></div>
+        <div class="detail-content-col">
+            <span class="detail-num"   id="detail-num"></span>
+            <h1 class="detail-title"   id="detail-title"></h1>
+            <p class="detail-subtitle" id="detail-subtitle"></p>
+            <div class="ornament detail-ornament" aria-hidden="true">
+                <div class="ornament-diamond"></div>
+            </div>
+            <div class="detail-story"  id="detail-story"></div>
+            <div class="detail-includes">
+                <span class="detail-includes-label">Ce cadeau comprend</span>
+                <ul id="detail-includes-list"></ul>
+            </div>
+            <div class="detail-cta">
+                <button class="btn-choose-final" id="btn-choose" type="button">Je choisis ce cadeau</button>
+            </div>
+        </div>
+    </div>
+
+<script>const GIFT_ID = 2;</script>
+<script src="/gifts-data.js"></script>
+<script src="/cadeau-page.js"></script>
+</body>
+</html>
