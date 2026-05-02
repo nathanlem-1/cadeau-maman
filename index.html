@@ -360,7 +360,7 @@
             inset: 0;
             z-index: 80;
             background: var(--c-black);
-            overflow-y: auto;
+            overflow-y: scroll;
             -webkit-overflow-scrolling: touch;
             transform: translateX(100%);
             transition: transform .55s var(--ease-out);
@@ -733,23 +733,30 @@
             .card-img { aspect-ratio: 4 / 5; }
 
             /* Layout 2 colonnes sur la page détail */
-            #detail-screen { overflow-y: hidden; }
+            #detail-screen {
+                overflow: hidden;
+                display: flex;
+                flex-direction: column;
+            }
 
             .detail-layout {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
-                min-height: calc(100vh - 56px);
+                flex: 1;
+                min-height: 0;
+                overflow: hidden;
             }
 
             .detail-hero {
                 aspect-ratio: auto;
-                height: calc(100vh - 56px);
-                position: sticky;
-                top: 56px;
+                height: 100%;
+                overflow: hidden;
             }
 
             .detail-body {
-                overflow-y: auto;
+                height: 100%;
+                overflow-y: scroll;
+                -webkit-overflow-scrolling: touch;
                 padding: 4rem 3.5rem 6rem;
                 max-width: none;
             }
@@ -1068,7 +1075,6 @@ function openDetail(id) {
     // Ouvre le panneau + scroll en haut
     detailScreen.scrollTop = 0;
     detailScreen.classList.add('open');
-    document.body.style.overflow = 'hidden';
 }
 
 cards.forEach(card => {
@@ -1083,7 +1089,6 @@ cards.forEach(card => {
 ================================================================ */
 function closeDetail() {
     detailScreen.classList.remove('open');
-    document.body.style.overflow = '';
 }
 
 btnBack.addEventListener('click', closeDetail);
