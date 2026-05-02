@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="style.css">
     <style>
 
+        /* Bloque le scroll tant que le splash/rideau est actif */
+        html, body { overflow: hidden; height: 100%; }
+        body.revealed { overflow: auto; height: auto; }
+
         /* ================================================================
            SPLASH
         ================================================================ */
@@ -367,6 +371,7 @@ if (skipIntro) {
     cRight.classList.add('open');
     revealHdr.classList.add('show');
     cards.forEach(card => card.classList.add('show'));
+    document.body.classList.add('revealed');
 }
 
 /* ---- Images ---- */
@@ -405,6 +410,9 @@ btnDiscover.addEventListener('click', () => {
     cards.forEach((card, i) => {
         setTimeout(() => card.classList.add('show'), 1900 + i * 280);
     });
+
+    // Déverrouille le scroll une fois toutes les cartes visibles
+    setTimeout(() => document.body.classList.add('revealed'), 1900 + 2 * 280 + 600);
 });
 
 /* ================================================================
