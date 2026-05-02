@@ -10,8 +10,8 @@ const GIFTS = {
         ],
         includes: [
             'Spectacle Le Roi Lion — 2 places au Théâtre Mogador',
-            'Hôtel haut de gamme au cœur de Paris',
-            'Week-end complet — 2 jours, 2 nuits'
+            'Hôtel au cœur de Paris',
+            '1 nuit, 2 jours'
         ]
     },
     2: {
@@ -21,12 +21,11 @@ const GIFTS = {
         subtitle: 'La Normandie dans toute sa splendeur',
         story: [
             'À deux heures de Paris, Deauville t\'attend. Les planches, la mer grise et lumineuse, les façades à colombages — tout ici invite à ralentir, à respirer, à savourer chaque instant sans se presser. Une parenthèse hors du temps.',
-            'Un hôtel d\'exception t\'attend, avec accès spa pour un soin bien mérité, et une table gastronomique pour finir la journée comme il se doit : les yeux posés sur la mer, le verre levé, entourée de ceux qui t\'aiment.'
+            'Un hôtel d\'exception t\'attend, avec accès spa pour un soin bien mérité, et une table gastronomique pour finir la journée comme il se doit : les yeux posés sur la mer, le verre levé, avec la personne de ton choix.'
         ],
         includes: [
             '1 ou 2 nuits dans un hôtel d\'exception',
-            'Accès SPA & soins',
-            'Dîner gastronomique face à la mer'
+            'Dîner gastronomique OU Spa & soins'
         ]
     },
     3: {
