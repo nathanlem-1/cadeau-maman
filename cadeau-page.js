@@ -13,7 +13,7 @@ function navigateTo(url) {
 /* Retour */
 document.getElementById('btn-back').addEventListener('click', e => {
     e.preventDefault();
-    navigateTo('/?skip=1');
+    navigateTo('/cadeaux?skip=1');
 });
 
 /* Contenu */

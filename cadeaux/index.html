@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choisis ton cadeau — 50 ans d'Agnès</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/home.css">
+</head>
+<body>
+
+<!-- RIDEAU -->
+<div id="curtain-left"  class="curtain" aria-hidden="true"></div>
+<div id="curtain-right" class="curtain" aria-hidden="true"></div>
+
+<!-- CADEAUX -->
+<main id="main-content">
+    <header class="reveal-header" id="reveal-header">
+        <span class="eyebrow">Ton anniversaire</span>
+        <h1>Choisis ton cadeau</h1>
+    </header>
+
+    <div class="cards-grid">
+
+        <article class="gift-card" data-href="/cadeau/1">
+            <div class="card-img" id="img-wrap-1">
+                <div class="card-img-placeholder" aria-hidden="true"><span>gift-1.jpg</span></div>
+            </div>
+            <div class="card-body">
+                <span class="card-num">— I —</span>
+                <h2 class="card-title">Paris &amp; Le Roi Lion</h2>
+                <p class="card-desc">Un week-end à Paris avec hôtel et places pour le spectacle Le Roi Lion.</p>
+                <button class="btn-outline" type="button">Détails</button>
+            </div>
+        </article>
+
+        <article class="gift-card" data-href="/cadeau/2">
+            <div class="card-img" id="img-wrap-2">
+                <div class="card-img-placeholder" aria-hidden="true"><span>gift-2.jpg</span></div>
+            </div>
+            <div class="card-body">
+                <span class="card-num">— II —</span>
+                <h2 class="card-title">Escapade à Deauville</h2>
+                <p class="card-desc">Un week-end normand dans un hôtel d'exception, face à la mer.</p>
+                <button class="btn-outline" type="button">Détails</button>
+            </div>
+        </article>
+
+        <article class="gift-card" data-href="/cadeau/3">
+            <div class="card-img" id="img-wrap-3">
+                <div class="card-img-placeholder" aria-hidden="true"><span>gift-3.jpg</span></div>
+            </div>
+            <div class="card-body">
+                <span class="card-num">— III —</span>
+                <h2 class="card-title">Le Sac de tes Rêves</h2>
+                <p class="card-desc">Une cagnotte réunie avec amour pour t'offrir le sac tant désiré.</p>
+                <button class="btn-outline" type="button">Détails</button>
+            </div>
+        </article>
+
+    </div>
+</main>
+
+<button id="sound-btn" type="button">♪ Son</button>
+
+<script src="/gifts-data.js"></script>
+<script>
+'use strict';
+
+function navigateTo(url) {
+    document.body.classList.add('exit');
+    setTimeout(() => { window.location.href = url; }, 280);
+}
+
+const skipIntro = new URLSearchParams(location.search).has('skip');
+const cLeft     = document.getElementById('curtain-left');
+const cRight    = document.getElementById('curtain-right');
+const revealHdr = document.getElementById('reveal-header');
+const cards     = document.querySelectorAll('.gift-card');
+
+/* Son */
+const soundBtn   = document.getElementById('sound-btn');
+let soundEnabled = true;
+let audio        = null;
+try { audio = new Audio('/fanfare.mp3'); audio.preload = 'auto'; } catch(e) {}
+
+soundBtn.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    soundBtn.textContent = soundEnabled ? '♪ Son' : '♪ Muet';
+});
+
+if (skipIntro) {
+    cLeft.style.transition  = 'none';
+    cRight.style.transition = 'none';
+    cLeft.classList.add('open');
+    cRight.classList.add('open');
+    revealHdr.classList.add('show');
+    cards.forEach(card => card.classList.add('show'));
+} else {
+    setTimeout(() => {
+        if (soundEnabled && audio) { audio.currentTime = 0; audio.play().catch(() => {}); }
+        cLeft.classList.add('open');
+        cRight.classList.add('open');
+    }, 300);
+
+    setTimeout(() => revealHdr.classList.add('show'), 1600);
+    cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('show'), 1900 + i * 280);
+    });
+}
+
+/* Images */
+[1, 2, 3].forEach(n => {
+    const wrap = document.getElementById(`img-wrap-${n}`);
+    const img  = new Image();
+    img.alt    = GIFTS[n].name;
+    img.onload = () => { wrap.innerHTML = ''; wrap.appendChild(img); };
+    img.src    = `/${GIFTS[n].img}`;
+});
+
+/* Navigation vers les cadeaux */
+cards.forEach(card => {
+    const go = () => navigateTo(card.dataset.href);
+    card.querySelector('.btn-outline').addEventListener('click', e => { e.stopPropagation(); go(); });
+    card.addEventListener('click', go);
+});
+</script>
+</body>
+</html>
