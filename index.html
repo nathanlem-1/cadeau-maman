@@ -25,12 +25,15 @@
 <script>
 'use strict';
 
-document.documentElement.classList.add('locked');
-
 function navigateTo(url) {
     document.body.classList.add('exit');
     setTimeout(() => { window.location.href = url; }, 280);
 }
+
+/* Nettoyage bfcache : si on revient en arrière, retirer body.exit */
+window.addEventListener('pageshow', (e) => {
+    if (e.persisted) document.body.classList.remove('exit');
+});
 
 document.getElementById('btn-discover').addEventListener('click', () => {
     navigateTo('/cadeaux');
