@@ -77,13 +77,25 @@
         /* Monogramme — modifier la lettre dans le HTML */
         .splash-mono {
             font-family: var(--f-title);
-            font-size: clamp(7rem, 20vw, 13rem);
+            font-size: clamp(4rem, 14vw, 9rem);
             font-weight: 300;
             color: var(--c-red);
             line-height: 1;
             letter-spacing: .04em;
             opacity: 0;
             animation: aFadeScale 2s var(--ease-out) .3s forwards;
+        }
+
+        .splash-sub {
+            font-family: var(--f-body);
+            font-size: .65rem;
+            font-weight: 500;
+            letter-spacing: .45em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .4);
+            margin-top: .5rem;
+            opacity: 0;
+            animation: aFadeUp .9s var(--ease-out) 1.2s forwards;
         }
 
         .splash-tagline {
@@ -611,8 +623,11 @@
 ================================================================ -->
 <section id="splash">
     <!-- Modifier la lettre ci-dessous selon le prénom -->
-    <div class="splash-mono" aria-hidden="true">L</div>
-    <p class="splash-tagline">Un cadeau à la hauteur de vos 50 ans.</p>
+    <div>
+        <div class="splash-mono">Agnès</div>
+        <p class="splash-sub">Maman</p>
+    </div>
+    <p class="splash-tagline">Un cadeau à la hauteur de tes 50 ans.</p>
     <div class="splash-rule" aria-hidden="true">
         <div class="splash-rule-dot"></div>
     </div>
@@ -633,8 +648,8 @@
 <main id="main-content">
 
     <header class="reveal-header" id="reveal-header">
-        <span class="eyebrow">Votre anniversaire</span>
-        <h1>Choisissez votre cadeau</h1>
+        <span class="eyebrow">Ton anniversaire</span>
+        <h1>Choisis ton cadeau</h1>
     </header>
 
     <div class="cards-grid">
@@ -695,14 +710,14 @@
 
 <div id="confirmation" role="dialog" aria-modal="true" aria-labelledby="conf-chosen-text">
     <span class="conf-eyebrow">Félicitations</span>
-    <p class="conf-line1">Vous avez choisi</p>
+    <p class="conf-line1">Tu as choisi</p>
     <h2 class="conf-chosen" id="conf-chosen-text"></h2>
     <div class="conf-ornament" aria-hidden="true">
         <div class="conf-ornament-diamond"></div>
     </div>
     <p class="conf-sub">
         Les organisateurs ont été prévenus.<br>
-        Profitez de ce moment.
+        Profite de ce moment.
     </p>
     <a href="#" class="btn-details" id="btn-details">Voir les détails</a>
 </div>
