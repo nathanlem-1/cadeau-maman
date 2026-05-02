@@ -62,7 +62,7 @@ export default async function handler(req, res) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            from: 'Cadeau Anniversaire <nathan.lemoine@drakkar.io>',
+            from: 'Cadeau Anniversaire <noreply@analyseao.drakkar.group>',
             to:   [toEmail],
             subject: `🎁 Cadeau choisi : ${gift}`,
             html
