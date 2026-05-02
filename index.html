@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un Cadeau d'Exception · 50 ans</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+
+        /* ================================================================
+           VARIABLES & RESET
+        ================================================================ */
+        :root {
+            --c-black:    #0A0A0A;
+            --c-white:    #FFFFFF;
+            --c-red:      #C41E3A;
+            --c-red-dark: #9E1830;
+            --c-gold:     #B8860B;
+            --c-surface:  #111111;
+            --c-border:   rgba(255, 255, 255, .07);
+
+            --f-title: 'Cormorant Garamond', Georgia, serif;
+            --f-body:  'Jost', system-ui, sans-serif;
+
+            --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--c-black);
+            color: var(--c-white);
+            font-family: var(--f-body);
+            font-weight: 300;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+
+        /* ================================================================
+           ÉCRAN 1 — SPLASH
+        ================================================================ */
+
+        #splash {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: var(--c-black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            padding: 2rem;
+            text-align: center;
+            transition: opacity .7s var(--ease-out), visibility .7s;
+        }
+
+        #splash.exit {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        /* Monogramme — modifier la lettre dans le HTML */
+        .splash-mono {
+            font-family: var(--f-title);
+            font-size: clamp(7rem, 20vw, 13rem);
+            font-weight: 300;
+            color: var(--c-red);
+            line-height: 1;
+            letter-spacing: .04em;
+            opacity: 0;
+            animation: aFadeScale 2s var(--ease-out) .3s forwards;
+        }
+
+        .splash-tagline {
+            font-family: var(--f-title);
+            font-size: clamp(1.1rem, 3.5vw, 1.9rem);
+            font-weight: 300;
+            font-style: italic;
+            letter-spacing: .03em;
+            color: rgba(255, 255, 255, .85);
+            opacity: 0;
+            animation: aFadeUp .9s var(--ease-out) 1.9s forwards;
+        }
+
+        .splash-rule {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            opacity: 0;
+            animation: aFadeUp .9s var(--ease-out) 2.1s forwards;
+        }
+
+        .splash-rule::before,
+        .splash-rule::after {
+            content: '';
+            display: block;
+            width: 36px;
+            height: 1px;
+            background: var(--c-red);
+        }
+
+        .splash-rule-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--c-red);
+        }
+
+        #btn-discover {
+            font-family: var(--f-body);
+            font-size: .65rem;
+            font-weight: 500;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--c-white);
+            border: 1px solid var(--c-red);
+            padding: 1rem 3.5rem;
+            transition: background .22s, color .22s, border-color .22s;
+            opacity: 0;
+            animation: aFadeUp .9s var(--ease-out) 2.5s forwards;
+        }
+
+        #btn-discover:hover {
+            background: var(--c-white);
+            color: var(--c-black);
+            border-color: var(--c-white);
+        }
+
+
+        /* ================================================================
+           RIDEAU DE THÉÂTRE
+        ================================================================ */
+
+        .curtain {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+            z-index: 60;
+            /* Velours — stries verticales simulées */
+            background-color: var(--c-red);
+            background-image: repeating-linear-gradient(
+                91deg,
+                rgba(0, 0, 0, .13) 0,
+                rgba(0, 0, 0, 0)   2px,
+                rgba(0, 0, 0, 0)   5px,
+                rgba(0, 0, 0, .07) 7px
+            );
+            transition: transform 1.9s var(--ease-curtain);
+            will-change: transform;
+        }
+
+        /* Ombre intérieure pour la profondeur */
+        #curtain-left {
+            left: 0;
+            transform: translateX(0);
+        }
+
+        #curtain-left::after {
+            content: '';
+            position: absolute;
+            right: 0; top: 0; bottom: 0;
+            width: 70px;
+            background: linear-gradient(to right, transparent, rgba(0, 0, 0, .38));
+            pointer-events: none;
+        }
+
+        #curtain-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        #curtain-right::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 70px;
+            background: linear-gradient(to left, transparent, rgba(0, 0, 0, .38));
+            pointer-events: none;
+        }
+
+        #curtain-left.open  { transform: translateX(-100%); }
+        #curtain-right.open { transform: translateX(100%); }
+
+
+        /* ================================================================
+           BOUTON SON
+        ================================================================ */
+
+        #sound-btn {
+            position: fixed;
+            top: 1.25rem;
+            right: 1.25rem;
+            z-index: 200;
+            font-size: .58rem;
+            font-weight: 500;
+            letter-spacing: .22em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .4);
+            border: 1px solid rgba(255, 255, 255, .12);
+            padding: .4rem .9rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .5s var(--ease-out), color .2s, border-color .2s;
+        }
+
+        #sound-btn.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #sound-btn:hover {
+            color: var(--c-white);
+            border-color: rgba(255, 255, 255, .35);
+        }
+
+
+        /* ================================================================
+           CONTENU PRINCIPAL
+        ================================================================ */
+
+        #main-content {
+            min-height: 100vh;
+            padding: 8rem 1.5rem 6rem;
+        }
+
+        /* En-tête de section */
+        .reveal-header {
+            text-align: center;
+            margin-bottom: 5rem;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .8s var(--ease-out), transform .8s var(--ease-out);
+        }
+
+        .reveal-header.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        .eyebrow {
+            display: block;
+            font-size: .58rem;
+            font-weight: 500;
+            letter-spacing: .48em;
+            text-transform: uppercase;
+            color: var(--c-red);
+            margin-bottom: .75rem;
+        }
+
+        .reveal-header h1 {
+            font-family: var(--f-title);
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            font-weight: 300;
+            letter-spacing: .04em;
+            line-height: 1.15;
+        }
+
+
+        /* ================================================================
+           GRILLE DE CARTES
+        ================================================================ */
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .gift-card {
+            background: var(--c-surface);
+            border: 1px solid var(--c-border);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(28px);
+            transition:
+                opacity .65s var(--ease-out),
+                transform .65s var(--ease-out),
+                border-color .22s,
+                box-shadow .22s;
+        }
+
+        .gift-card.show {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (hover: hover) {
+            .gift-card:hover {
+                border-color: var(--c-red);
+                box-shadow: 0 14px 55px rgba(196, 30, 58, .13);
+            }
+
+            .gift-card:hover .card-img img {
+                transform: scale(1.04);
+            }
+        }
+
+        /* Image */
+        .card-img {
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #1c1c1c;
+            position: relative;
+        }
+
+        .card-img img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .7s var(--ease-out);
+        }
+
+        .card-img-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-img-placeholder span {
+            font-family: var(--f-title);
+            font-size: .6rem;
+            letter-spacing: .38em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .15);
+        }
+
+        /* Corps de carte */
+        .card-body {
+            padding: 2rem 2rem 2.5rem;
+        }
+
+        .card-num {
+            display: block;
+            font-size: .53rem;
+            font-weight: 500;
+            letter-spacing: .55em;
+            text-transform: uppercase;
+            color: var(--c-red);
+            margin-bottom: .75rem;
+        }
+
+        .card-title {
+            font-family: var(--f-title);
+            font-size: clamp(1.65rem, 3vw, 2.15rem);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            line-height: 1.1;
+            margin-bottom: .75rem;
+            color: var(--c-white);
+        }
+
+        .card-desc {
+            font-size: .82rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .52);
+            line-height: 1.8;
+            margin-bottom: 1.75rem;
+        }
+
+        .btn-choose {
+            font-size: .63rem;
+            font-weight: 500;
+            letter-spacing: .3em;
+            text-transform: uppercase;
+            color: var(--c-white);
+            background: var(--c-red);
+            padding: .85rem 2.25rem;
+            transition: background .2s;
+        }
+
+        .btn-choose:hover {
+            background: var(--c-red-dark);
+        }
+
+
+        /* ================================================================
+           ÉCRAN 4 — CONFIRMATION
+        ================================================================ */
+
+        #confirmation {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: var(--c-black);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .7s var(--ease-out), visibility .7s;
+        }
+
+        #confirmation.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Éléments enfants — animés via classes .show sur le parent */
+        .conf-eyebrow {
+            font-size: .58rem;
+            font-weight: 500;
+            letter-spacing: .48em;
+            text-transform: uppercase;
+            color: var(--c-red);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity .6s var(--ease-out) .2s, transform .6s var(--ease-out) .2s;
+        }
+
+        .conf-line1 {
+            font-family: var(--f-title);
+            font-size: clamp(1.1rem, 3vw, 1.75rem);
+            font-weight: 300;
+            font-style: italic;
+            color: rgba(255, 255, 255, .65);
+            margin-bottom: .4rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity .6s var(--ease-out) .45s, transform .6s var(--ease-out) .45s;
+        }
+
+        .conf-chosen {
+            font-family: var(--f-title);
+            font-size: clamp(2.2rem, 7vw, 4.8rem);
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: .06em;
+            color: var(--c-red);
+            line-height: 1.1;
+            margin-bottom: 2.5rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity .6s var(--ease-out) .7s, transform .6s var(--ease-out) .7s;
+        }
+
+        .conf-ornament {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transition: opacity .6s var(--ease-out) .9s;
+        }
+
+        .conf-ornament::before,
+        .conf-ornament::after {
+            content: '';
+            display: block;
+            width: 48px;
+            height: 1px;
+            background: rgba(255, 255, 255, .18);
+        }
+
+        .conf-ornament-diamond {
+            width: 5px;
+            height: 5px;
+            background: var(--c-red);
+            transform: rotate(45deg);
+        }
+
+        .conf-sub {
+            font-size: .82rem;
+            font-weight: 300;
+            color: rgba(255, 255, 255, .38);
+            line-height: 1.95;
+            letter-spacing: .03em;
+            max-width: 380px;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity .6s var(--ease-out) 1.05s, transform .6s var(--ease-out) 1.05s;
+        }
+
+        .btn-details {
+            font-size: .6rem;
+            font-weight: 500;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .28);
+            border: 1px solid rgba(255, 255, 255, .1);
+            padding: .85rem 2.5rem;
+            text-decoration: none;
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(12px);
+            transition:
+                opacity .6s var(--ease-out) 1.3s,
+                transform .6s var(--ease-out) 1.3s,
+                color .2s,
+                border-color .2s;
+        }
+
+        .btn-details:hover {
+            color: var(--c-white);
+            border-color: rgba(255, 255, 255, .32);
+        }
+
+        /* Déclenchement des animations au .show */
+        #confirmation.show .conf-eyebrow,
+        #confirmation.show .conf-line1,
+        #confirmation.show .conf-chosen,
+        #confirmation.show .conf-ornament,
+        #confirmation.show .conf-sub,
+        #confirmation.show .btn-details {
+            opacity: 1;
+            transform: none;
+        }
+
+
+        /* ================================================================
+           CANVAS CONFETTIS
+        ================================================================ */
+
+        #confetti-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 299;
+            pointer-events: none;
+        }
+
+
+        /* ================================================================
+           KEYFRAMES
+        ================================================================ */
+
+        @keyframes aFadeScale {
+            from { opacity: 0; transform: scale(.93); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes aFadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+
+        /* ================================================================
+           TABLETTE — 768px
+        ================================================================ */
+
+        @media (min-width: 768px) {
+            #main-content { padding: 8rem 3rem 6rem; }
+
+            .cards-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2rem;
+            }
+
+            .gift-card:nth-child(3) {
+                grid-column: 1 / -1;
+                max-width: 540px;
+                justify-self: center;
+                width: 100%;
+            }
+        }
+
+
+        /* ================================================================
+           DESKTOP — 1280px
+        ================================================================ */
+
+        @media (min-width: 1280px) {
+            #main-content { padding: 9rem 5rem 7rem; }
+
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2.5rem;
+            }
+
+            .gift-card:nth-child(3) {
+                grid-column: auto;
+                max-width: none;
+                justify-self: auto;
+            }
+
+            /* Portrait sur desktop pour plus d'élégance */
+            .card-img { aspect-ratio: 4 / 5; }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- ================================================================
+     ÉCRAN 1 — SPLASH
+================================================================ -->
+<section id="splash">
+    <!-- Modifier la lettre ci-dessous selon le prénom -->
+    <div class="splash-mono" aria-hidden="true">L</div>
+    <p class="splash-tagline">Un cadeau à la hauteur de vos 50 ans.</p>
+    <div class="splash-rule" aria-hidden="true">
+        <div class="splash-rule-dot"></div>
+    </div>
+    <button id="btn-discover" type="button">Découvrir</button>
+</section>
+
+
+<!-- ================================================================
+     RIDEAU DE THÉÂTRE
+================================================================ -->
+<div id="curtain-left"  class="curtain" aria-hidden="true"></div>
+<div id="curtain-right" class="curtain" aria-hidden="true"></div>
+
+
+<!-- ================================================================
+     ÉCRAN 3 — RÉVÉLATION DES CADEAUX
+================================================================ -->
+<main id="main-content">
+
+    <header class="reveal-header" id="reveal-header">
+        <span class="eyebrow">Votre anniversaire</span>
+        <h1>Choisissez votre cadeau</h1>
+    </header>
+
+    <div class="cards-grid">
+
+        <!-- Cadeau 1 -->
+        <article class="gift-card" data-gift="Paris &amp; Le Roi Lion">
+            <div class="card-img" id="img-wrap-1">
+                <div class="card-img-placeholder" aria-hidden="true">
+                    <span>gift-1.jpg</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <span class="card-num">— I —</span>
+                <h2 class="card-title">Paris &amp; Le Roi Lion</h2>
+                <p class="card-desc">Un week-end à Paris avec hôtel haut de gamme et places pour le spectacle Le Roi Lion.</p>
+                <button class="btn-choose" type="button">Choisir ce cadeau</button>
+            </div>
+        </article>
+
+        <!-- Cadeau 2 -->
+        <article class="gift-card" data-gift="Escapade à Deauville">
+            <div class="card-img" id="img-wrap-2">
+                <div class="card-img-placeholder" aria-hidden="true">
+                    <span>gift-2.jpg</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <span class="card-num">— II —</span>
+                <h2 class="card-title">Escapade à Deauville</h2>
+                <p class="card-desc">Un week-end normand dans un hôtel d'exception, face à la mer.</p>
+                <button class="btn-choose" type="button">Choisir ce cadeau</button>
+            </div>
+        </article>
+
+        <!-- Cadeau 3 -->
+        <article class="gift-card" data-gift="Le Sac de vos Rêves">
+            <div class="card-img" id="img-wrap-3">
+                <div class="card-img-placeholder" aria-hidden="true">
+                    <span>gift-3.jpg</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <span class="card-num">— III —</span>
+                <h2 class="card-title">Le Sac de vos Rêves</h2>
+                <p class="card-desc">Une cagnotte réunie avec amour pour s'offrir le sac tant désiré.</p>
+                <button class="btn-choose" type="button">Choisir ce cadeau</button>
+            </div>
+        </article>
+
+    </div>
+</main>
+
+
+<!-- ================================================================
+     ÉCRAN 4 — CONFIRMATION
+================================================================ -->
+<canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+<div id="confirmation" role="dialog" aria-modal="true" aria-labelledby="conf-chosen-text">
+    <span class="conf-eyebrow">Félicitations</span>
+    <p class="conf-line1">Vous avez choisi</p>
+    <h2 class="conf-chosen" id="conf-chosen-text"></h2>
+    <div class="conf-ornament" aria-hidden="true">
+        <div class="conf-ornament-diamond"></div>
+    </div>
+    <p class="conf-sub">
+        Les organisateurs ont été prévenus.<br>
+        Profitez de ce moment.
+    </p>
+    <a href="#" class="btn-details" id="btn-details">Voir les détails</a>
+</div>
+
+
+<!-- Son (optionnel) -->
+<button id="sound-btn" type="button" title="Activer / couper le son">♪ Son</button>
+
+
+<!-- ================================================================
+     JAVASCRIPT
+================================================================ -->
+<script>
+'use strict';
+
+/* ---- Éléments ---- */
+const splash      = document.getElementById('splash');
+const btnDiscover = document.getElementById('btn-discover');
+const cLeft       = document.getElementById('curtain-left');
+const cRight      = document.getElementById('curtain-right');
+const revealHdr   = document.getElementById('reveal-header');
+const cards       = document.querySelectorAll('.gift-card');
+const confirmEl   = document.getElementById('confirmation');
+const confChosen  = document.getElementById('conf-chosen-text');
+const soundBtn    = document.getElementById('sound-btn');
+const btnDetails  = document.getElementById('btn-details');
+const canvas      = document.getElementById('confetti-canvas');
+const ctx         = canvas.getContext('2d');
+
+
+/* ---- Images
+   Déposer gift-1.jpg / gift-2.jpg / gift-3.jpg dans le même dossier.
+   Si absentes, le placeholder texte reste affiché.
+-------------------------------------------------------------------- */
+[1, 2, 3].forEach(n => {
+    const wrap = document.getElementById(`img-wrap-${n}`);
+    const img  = new Image();
+    img.alt    = `Cadeau ${n}`;
+    img.onload = () => {
+        wrap.innerHTML = '';
+        wrap.appendChild(img);
+    };
+    img.src = `gift-${n}.jpg`;
+});
+
+
+/* ---- Son
+   Déposer fanfare.mp3 dans le même dossier pour activer.
+-------------------------------------------------------------------- */
+let soundEnabled = true;
+let audio = null;
+try {
+    audio = new Audio('fanfare.mp3');
+    audio.preload = 'auto';
+} catch (e) {}
+
+soundBtn.addEventListener('click', () => {
+    soundEnabled = !soundEnabled;
+    soundBtn.textContent = soundEnabled ? '♪ Son' : '♪ Muet';
+});
+
+function playFanfare() {
+    if (soundEnabled && audio) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+    }
+}
+
+
+/* ---- Séquence Splash → Révélation ---- */
+btnDiscover.addEventListener('click', () => {
+    splash.classList.add('exit');
+    soundBtn.classList.add('visible');
+
+    setTimeout(() => {
+        playFanfare();
+        cLeft.classList.add('open');
+        cRight.classList.add('open');
+    }, 280);
+
+    setTimeout(() => revealHdr.classList.add('show'), 1600);
+
+    cards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('show'), 1900 + i * 280);
+    });
+});
+
+
+/* ---- Sélection d'un cadeau ---- */
+cards.forEach(card => {
+    card.querySelector('.btn-choose').addEventListener('click', () => {
+        confChosen.textContent = card.dataset.gift;
+        confirmEl.classList.add('show');
+        btnDetails.setAttribute('tabindex', '0');
+        launchConfetti();
+    });
+});
+
+btnDetails.addEventListener('click', e => e.preventDefault());
+
+
+/* ---- Confettis (discrets, rouge + or) ---- */
+const CONFETTI_COLORS = [
+    '#C41E3A', '#C41E3A',
+    '#B8860B', '#D4AF37',
+    '#8B1020',
+    '#FFFFFF'
+];
+
+let particles = [];
+let rafId     = null;
+
+function resizeCanvas() {
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resizeCanvas, { passive: true });
+resizeCanvas();
+
+function makeParticle() {
+    return {
+        x:     Math.random() * canvas.width,
+        y:     -12,
+        vx:    (Math.random() - .5) * 1.5,
+        vy:    Math.random() * 2.5 + .8,
+        w:     Math.random() * 7 + 2,
+        h:     Math.random() * 14 + 4,
+        angle: Math.random() * Math.PI * 2,
+        spin:  (Math.random() - .5) * .11,
+        color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)],
+        alpha: 1
+    };
+}
+
+function tickConfetti() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+        p.x     += p.vx;
+        p.y     += p.vy;
+        p.angle += p.spin;
+        if (p.y > canvas.height * .72) p.alpha -= .016;
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        ctx.restore();
+    });
+
+    particles = particles.filter(p => p.alpha > 0 && p.y < canvas.height + 20);
+
+    if (particles.length > 0) {
+        rafId = requestAnimationFrame(tickConfetti);
+    } else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        rafId = null;
+    }
+}
+
+function launchConfetti() {
+    if (rafId) cancelAnimationFrame(rafId);
+    particles = [];
+
+    let bursts = 0;
+    const interval = setInterval(() => {
+        for (let i = 0; i < 10; i++) particles.push(makeParticle());
+        if (++bursts >= 22) clearInterval(interval);
+    }, 55);
+
+    tickConfetti();
+}
+</script>
+
+</body>
+</html>
